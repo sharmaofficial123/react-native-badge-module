@@ -1,5 +1,5 @@
 {
-  "name": "@purusharma/react-native-badge-module",
+  "name": "@purusharmaofficiall/react-native-badge-module",
   "version": "1.0.0",
   "description": "React Native Android badge count module built on ShortcutBadger",
   "main": "src/index.js",

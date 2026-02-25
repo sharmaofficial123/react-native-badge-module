@@ -1,57 +1,51 @@
 package com.reactnativebadgemodule
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import me.leolin.shortcutbadger.ShortcutBadger
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.facebook.react.bridge.*
 
-class BadgeModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
-  private val prefs: SharedPreferences =
-    reactContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+class BadgeModule(private val reactContext: ReactApplicationContext) :
+    ReactContextBaseJavaModule(reactContext) {
 
-  override fun getName(): String {
-    return NAME
-  }
+    override fun getName() = "BadgeModule"
 
-  @ReactMethod
-  fun setBadgeCount(count: Int) {
-    try {
-      ShortcutBadger.applyCount(reactApplicationContext, count)
-      prefs.edit().putInt(KEY_BADGE_COUNT, count).apply()
-      Log.d(NAME, "Badge count set to $count")
-    } catch (e: Exception) {
-      Log.e(NAME, "Error setting badge count", e)
+    private fun createChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "badge_channel",
+                "Badge Notifications",
+                NotificationManager.IMPORTANCE_MIN
+            ).apply { setShowBadge(true) }
+            val manager = reactContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
     }
-  }
 
-  @ReactMethod
-  fun clearBadge() {
-    try {
-      ShortcutBadger.removeCount(reactApplicationContext)
-      prefs.edit().putInt(KEY_BADGE_COUNT, 0).apply()
-      Log.d(NAME, "Badge cleared")
-    } catch (e: Exception) {
-      Log.e(NAME, "Error clearing badge", e)
+    @ReactMethod
+    fun setBadgeCount(count: Int) {
+        createChannel()
+        val manager = NotificationManagerCompat.from(reactContext)
+        if (count == 0) { manager.cancel(1); return }
+        val notification = NotificationCompat.Builder(reactContext, "badge_channel")
+            .setContentTitle("$count new updates")
+            .setSmallIcon(android.R.drawable.ic_notification_overlay)
+            .setNumber(count)
+            .setSilent(true)
+            .build()
+        manager.notify(1, notification)
     }
-  }
 
-  @ReactMethod
-  fun getBadgeCount(promise: Promise) {
-    try {
-      val count = prefs.getInt(KEY_BADGE_COUNT, 0)
-      promise.resolve(count)
-    } catch (e: Exception) {
-      promise.reject("E_BADGE", "Error getting badge count", e)
+    @ReactMethod
+    fun clearBadge() {
+        NotificationManagerCompat.from(reactContext).cancel(1)
     }
-  }
 
-  companion object {
-    const val NAME = "BadgeModule"
-    private const val PREFS_NAME = "BadgePrefs"
-    private const val KEY_BADGE_COUNT = "badge_count"
-  }
+    @ReactMethod
+    fun getBadgeCount(promise: Promise) {
+        promise.resolve(0)
+    }
 }
