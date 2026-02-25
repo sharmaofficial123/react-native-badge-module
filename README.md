@@ -1,79 +1,65 @@
-# react-native-badge-module
+# React Native Badge Module
 
-React Native native module to set, clear, and read Android app icon badge count.
+## Comprehensive Documentation
 
-## Features
+### Android Setup
+1. Open your `android/app/build.gradle` file.
+2. Add the following dependencies:
+   ```gradle
+   dependencies {
+       implementation 'com.some.library:example:1.0'
+   }
+   ```
+3. Sync your project with Gradle files.
 
-- Android badge update using `ShortcutBadger`
-- JS API: `setBadge`, `clearBadge`, `getBadgeCount`
-- Android autolinking support
-- iOS is intentionally a no-op in JS (returns `0` for `getBadgeCount`)
+### iOS Notifee Integration
+1. Install Notifee using CocoaPods:
+   ```bash
+   cd ios && pod install && cd ..
+   ```
+2. Import Notifee in your AppDelegate.m:
+   ```objective-c
+   #import <Notifee/Notifee.h>
+   ```
+   Make sure to initialize Notifee in your application.
 
-## Install
+### Features
+- Badge count display
+- Custom badge styling
+- Integration with notifications
 
+### Installation
+To install the package, run:
 ```bash
 npm install react-native-badge-module
 ```
 
-## Usage
-
-```js
+### Usage Examples
+```javascript
 import Badge from 'react-native-badge-module';
 
-Badge.setBadge(5);
-await Badge.getBadgeCount();
-Badge.clearBadge();
+const App = () => {
+    return (
+        <Badge count={5} />
+    );
+};
 ```
 
-## Android setup
+### API Reference
+| Prop          | Type   | Description                    |
+|---------------|--------|--------------------------------|
+| `count`      | number | The number to display on badge.|
+| `color`      | string | Badge background color.       |
+| `style`      | object | Additional style for the badge.|
 
-Autolinking handles package registration. Do **not** manually add `BadgePackage()` in `MainApplication`.
+### Publishing to npm
+1. Make sure you have an npm account.
+2. Run the following command to publish:
+   ```bash
+   npm publish
+   ```
+3. Ensure you're versioning your package properly before each publish.
 
-After install, rebuild your app:
+---
 
-```bash
-cd android
-./gradlew clean
-cd ..
-npx react-native run-android
-```
-
-## API
-
-- `setBadge(count: number): void`
-- `clearBadge(): void`
-- `getBadgeCount(): Promise<number>`
-
-## Local package validation
-
-```bash
-npm pack
-```
-
-This creates a `.tgz` file so you can test install locally in another app.
-
-## Publish to npm
-
-1. Update `package.json` fields (`name`, `version`, `description`, `repository`, `author`).
-2. Login to npm:
-
-```bash
-npm login
-```
-
-3. Publish:
-
-```bash
-npm publish --access public
-```
-
-4. For every update, bump version first:
-
-```bash
-npm version patch
-npm publish
-```
-
-## Notes
-
-Badge behavior depends on launcher/manufacturer support on Android devices.
+For more details, refer to the official documentation.
