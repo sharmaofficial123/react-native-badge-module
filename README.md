@@ -1,65 +1,24 @@
-# React Native Badge Module
+# react-native-badge-module
 
-## Comprehensive Documentation
+A production-ready React Native native module to set, clear, and read Android app icon badge count. Includes iOS support via Notifee integration.
 
-### Android Setup
-1. Open your `android/app/build.gradle` file.
-2. Add the following dependencies:
-   ```gradle
-   dependencies {
-       implementation 'com.some.library:example:1.0'
-   }
-   ```
-3. Sync your project with Gradle files.
+## Features
 
-### iOS Notifee Integration
-1. Install Notifee using CocoaPods:
-   ```bash
-   cd ios && pod install && cd ..
-   ```
-2. Import Notifee in your AppDelegate.m:
-   ```objective-c
-   #import <Notifee/Notifee.h>
-   ```
-   Make sure to initialize Notifee in your application.
+- ✅ **Android badge updates** using `ShortcutBadger`
+- ✅ **iOS badge support** via `Notifee` library integration
+- ✅ **Simple JS API**: `setBadge`, `clearBadge`, `getBadgeCount`
+- ✅ **Android autolinking** support (no manual configuration needed)
+- ✅ **TypeScript support** with type definitions
+- ✅ **Error handling** with clear messages
+- ✅ **Persistent** badge storage across app restarts
 
-### Features
-- Badge count display
-- Custom badge styling
-- Integration with notifications
+## Requirements
 
-### Installation
-To install the package, run:
+- React Native >= 0.60.0
+- Android API level 21+
+- For iOS: `@react-native-firebase/app` and `react-native-notifee`
+
+## Installation
+
 ```bash
 npm install react-native-badge-module
-```
-
-### Usage Examples
-```javascript
-import Badge from 'react-native-badge-module';
-
-const App = () => {
-    return (
-        <Badge count={5} />
-    );
-};
-```
-
-### API Reference
-| Prop          | Type   | Description                    |
-|---------------|--------|--------------------------------|
-| `count`      | number | The number to display on badge.|
-| `color`      | string | Badge background color.       |
-| `style`      | object | Additional style for the badge.|
-
-### Publishing to npm
-1. Make sure you have an npm account.
-2. Run the following command to publish:
-   ```bash
-   npm publish
-   ```
-3. Ensure you're versioning your package properly before each publish.
-
----
-
-For more details, refer to the official documentation.
