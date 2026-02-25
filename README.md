@@ -1,24 +1,58 @@
 # react-native-badge-module
 
-A production-ready React Native native module to set, clear, and read Android app icon badge count. Includes iOS support via Notifee integration.
+React Native native module to set, clear, and read Android app icon badge count.
 
-## Features
+## What this library does
 
-- ✅ **Android badge updates** using `ShortcutBadger`
-- ✅ **iOS badge support** via `Notifee` library integration
-- ✅ **Simple JS API**: `setBadge`, `clearBadge`, `getBadgeCount`
-- ✅ **Android autolinking** support (no manual configuration needed)
-- ✅ **TypeScript support** with type definitions
-- ✅ **Error handling** with clear messages
-- ✅ **Persistent** badge storage across app restarts
+- Sets app icon badge count on Android launchers that support badges
+- Clears app icon badge count
+- Returns the last stored badge count
+- Uses `ShortcutBadger` under the hood for Android badge support
 
-## Requirements
+## Platform behavior
 
-- React Native >= 0.60.0
-- Android API level 21+
-- For iOS: `@react-native-firebase/app` and `react-native-notifee`
+- Android: fully supported (`setBadge`, `clearBadge`, `getBadgeCount`)
+- iOS: this package is a no-op (returns `0` for `getBadgeCount`)
 
-## Installation
+## Install
 
 ```bash
 npm install react-native-badge-module
+```
+
+## Usage
+
+```js
+import Badge from 'react-native-badge-module';
+
+Badge.setBadge(5);
+
+const count = await Badge.getBadgeCount();
+
+Badge.clearBadge();
+```
+
+## Android notes
+
+- React Native autolinking handles package registration
+- Do not manually add `BadgePackage()` in `MainApplication`
+- Badge behavior depends on launcher/manufacturer support
+
+## iOS badge handling (Notifee)
+
+If you need iOS badge support, use `@notifee/react-native`:
+
+```js
+import notifee from '@notifee/react-native';
+
+await notifee.requestPermission({ badge: true });
+await notifee.setBadgeCount(5);
+const iosBadgeCount = await notifee.getBadgeCount();
+await notifee.setBadgeCount(0);
+```
+
+## API
+
+- `setBadge(count: number): void`
+- `clearBadge(): void`
+- `getBadgeCount(): Promise<number>`
