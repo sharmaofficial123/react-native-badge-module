@@ -1,6 +1,6 @@
 {
   "name": "@purusharmaofficiall/react-native-badge-module",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React Native Android badge count module",
   "main": "src/index.js",
   "react-native": "src/index.js",
