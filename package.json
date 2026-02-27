@@ -1,7 +1,7 @@
 {
   "name": "@purusharmaofficiall/react-native-badge-module",
-  "version": "1.0.0",
-  "description": "React Native Android badge count module built on ShortcutBadger",
+  "version": "1.0.2",
+  "description": "React Native Android badge count module",
   "main": "src/index.js",
   "react-native": "src/index.js",
   "types": "src/index.d.ts",
@@ -12,13 +12,15 @@
     "README.md",
     "LICENSE"
   ],
-  "keywords": [
-    "react-native",
-    "android",
-    "badge",
-    "shortcutbadger",
-    "native-module"
-  ],
+  "codegenConfig": {
+    "name": "BadgeModule",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.reactnativebadgemodule"
+    }
+  },
+  "keywords": ["react-native", "android", "badge"],
   "license": "MIT",
   "peerDependencies": {
     "react": ">=18.0.0",
