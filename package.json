@@ -1,6 +1,6 @@
 {
   "name": "@purusharmaofficiall/react-native-badge-module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native Android badge count module",
   "main": "src/index.js",
   "react-native": "src/index.js",
@@ -12,14 +12,6 @@
     "README.md",
     "LICENSE"
   ],
-  "codegenConfig": {
-    "name": "BadgeModule",
-    "type": "modules",
-    "jsSrcsDir": "src",
-    "android": {
-      "javaPackageName": "com.reactnativebadgemodule"
-    }
-  },
   "keywords": ["react-native", "android", "badge"],
   "license": "MIT",
   "peerDependencies": {
